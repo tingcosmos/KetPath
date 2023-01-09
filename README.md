@@ -8,9 +8,9 @@ We provide four SPARQL query cases with the code and their results. Users can pe
 The Schema Data of the KetPath, SPARQL query codes, and query results are available at [KetPath Page](https://github.com/tingcosmos/KetPath).
 
 # Citation
-`@article{liu2020mikg4md,
+`@article{liu2020ketpath,
     author = {Liu, Ting and Feenstra, K Anton and Huang, Zhisheng and Heringa, Jaap},
-    title = "{Predicting the relationships between gut microbiota and mental disorders with knowledge graphs}",
+    title = "{A biomedical literature derived ketamine pathway knowledge graph}",
     journal = {},
     year = {2023},
     volume = {},
