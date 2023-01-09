@@ -9,7 +9,7 @@ The Schema Data of the KetPath, SPARQL query codes, and query results are availa
 
 # Citation
 `@article{liu2020mikg4md,
-    author = {Liu, Ting and Pan, Xueli and Wang, Xu and Feenstra, K Anton and Heringa, Jaap and Huang, Zhisheng},
+    author = {Liu, Ting and Feenstra, K Anton and Huang, Zhisheng and Heringa, Jaap},
     title = "{Predicting the relationships between gut microbiota and mental disorders with knowledge graphs}",
     journal = {},
     year = {2023},
