@@ -1,0 +1,215 @@
+1. Query protocols for case 1
+
+start -->
+   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+   prefix owl: <http://www.w3.org/2002/07/owl#> 
+   prefix snomed: <http://wasp.cs.vu.nl/sct/sct#>
+   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+   prefix ketcept: <http://wasp.cs.vu.nl/ketcept/>
+   prefix ketrela: <http://wasp.cs.vu.nl/ketrela/>
+   
+   select distinct  ?text  ?termLabel1  ?termLabel2  ?Relation  ?Text2  ?Entity1 
+                    ?Entity2  ?manualLabel  ?BioKetBERTLabel
+   
+   where {
+   {?PMID         ketcept:hasAnnotation    ?Annotation .
+   ?Annotation    ketcept:hasText          ?Text .
+   ?Annotation    ketcept:hasTerm          ?Term1 .
+   ?Term1         ketcept:hasLabel         ?TermLabel1 .
+   ?Term1         ketcept:hasSenses        ?Senses1 .
+   ?Senses1       ketcept:SenseURL         ?URL .
+   ?URL           snomed:hasEnglishLabel   ?URLLabel .
+   ?URL           rdfs:subClassOf          <http://www.ihtsdo.org/SCT_35069000> .}
+   filter exists
+   {?Annotation   ketcept:hasTerm          ?Term2 .
+   ?Term2         ketcept:hasLabel         ?TermLabel2 .
+   ?Term2         ketcept:hasSenses        ?Senses2 .
+   ?Senses2       ketcept:SenseURL         <http://www.ihtsdo.org/SCT_373464007> .}
+   union
+   {?Relation     ketrela:hasText          ?Text2 ;
+                  ketrela:hasEntity1       ?Entity1 ;
+                  ketrela:hasEntity2       ?Entity2 ;
+                  ketrela:manualLabel      ?manualLabel ;
+                  ketrela:BioBERTLabel     ?BioBERTLabel ;
+                  ketrela:BioKetBERTLabel  ?BioKetBERTLabel .}
+    }
+<-- end
+
+
+
+2. Query protocols for case 2
+
+start -->
+   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+   prefix owl: <http://www.w3.org/2002/07/owl#> 
+   prefix snomed: <http://wasp.cs.vu.nl/sct/sct#>
+   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   prefix db: <http://www.drugbank.ca/>
+   prefix dcterms: <http://purl.org/dc/terms/>
+   prefix wp: <http://vocabularies.wikipathways.org/wp#>
+   prefix kegg: <https://www.kegg.jp/dbget-bin/www_bget?> 
+
+   select distinct ?Action  ?TargetName  ?GeneName  ?PeptideID  ?PMID
+                   ?PathwayName  ?PathwayTitle  ?PathwayLink  ?Relation  ?R-Type
+                   ?E1Name  ?E1Type  ?E1Definition  ?E2Name  ?E2Type  ?E2Definition
+   where {
+   {?DBID           db:Name                     'Ketamine' ;
+                    db:externalIdentifiers      ?EIDs ;
+                    db:targets                  ?Targets .
+   ?EIDs            db:resource                 'KEGG' ;
+                    db:resourceID               ?EID .
+   ?Targets         db:target                   ?Target .
+   ?Target          db:targetID                 ?TargetID ;
+                    db:targetName               ?TargetName ;
+                    db:actions                  ?Actions ;
+                    db:references               ?References ;
+                    db:polypeptide              ?Polypeptide .
+   ?Actions         db:action                   ?Action .
+   ?References      db:articles                 ?Article .
+   ?Article         db:pubmedID                 ?PMID .
+   ?Polypeptide     db:peptideID                ?PeptideID ;
+                    db:peptideSource            ?PeptideSource ;
+                    db:geneName                 ?GeneName .}
+   union
+   {?Pathway        kegg:pathwayName            ?PathwayName ;
+                    kegg:pathwayTitle           ?PathwayTitle ;
+                    kegg:pathwayLink            ?PathwayLink ;
+                    kegg:Entry                  ?Entry ;
+                    kegg:Relation               ?Relation.
+   ?Relation        kegg:hasEntry1              ?Entry1 ;
+                    kegg:hasEntry2              ?Entry2 ;
+                    kegg:hasRelationSubtype     ?R-Type .
+   ?Entry           kegg:entryID                ?Entry1 ;
+                    kegg:entryName              ?E1Name ;
+                    kegg:entryType              ?E1Type ;
+                    kegg:entryLink              ?E1Link .
+   ?E1Link          kegg:hasDefinition          ?E1Definition .
+   ?Entry           kegg:entryID                ?Entry2 ;
+                    kegg:entryName              ?E2Name ;
+                    kegg:entryType              ?E2Type ;
+                    kegg:entryLink              ?E2Link .
+   ?E2Link          kegg:hasDefinition          ?E2Definition .
+   filter regex     (?PathwayTitle,'synapse','i')}
+   }
+   union
+   {?geneProduct    a                           wp:GeneProduct . 
+   ?geneProduct     rdfs:label                  ?label .
+   ?geneProduct     dcterms:isPartOf            ?pathway .
+   ?pathway         rdf:type                    ?type .
+   ?pathway         wp:source                   ?source .
+   ?source          rdfs:label                  ?sourceLabel.
+   ?pathway         wp:target                   ?target .
+   ?target          rdfs:label                  ?targetLabel .
+   ?pathway         dcterms:isPartOf            ?partpath .
+   ?partpath        dc:title                    ?title .
+   ?partpath        dc:identifier               ?identifier .
+   ?partpath        wp:organismName             'Homo sapiens' .
+   filter regex     (str(?sourceLabel), 'SLC6A2').}
+   }
+<-- end
+
+
+
+3. Query protocols for case 3
+
+start -->
+   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+   prefix owl: <http://www.w3.org/2002/07/owl#> 
+   prefix snomed: <http://wasp.cs.vu.nl/sct/sct#>
+   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+   prefix ketfact: <http://wasp.cs.vu.nl/ketfact/>
+
+   select distinct  ?Type  ?Entry1  ?E1Link  ?Entry2  ?E2Link  ?Item1  ?I1Link
+                    ?Item2  ?I2Link
+    
+   where {
+   {?Relation      ketfact:RelationType        ?Type ;
+                   ketfact:hasEntry1           ?Entry1 ;
+                   ketfact:hasEntry2           ?Entry2 ;
+   ?Entry1         ketfact:hasName             ?E1Name ;
+                   owl:sameAs                  ?E1Link .
+   ?Entry2         ketfact:hasName             ?E2Name ;
+                   owl:sameAs                  ?E2Link .}
+   union
+   {?Relation      ketfact:RelationType        ?Type ;
+                   ketfact:hasEntry1           ?Entry1 ;
+                   ketfact:hasEntry2           ?Entry2 ;
+   ?Entry1         ketfact:hasName             ?E1Name ;
+                   owl:sameAs                  ?E1Link .
+   ?Item2          rdfs:subClassOf             ?Entry2 ;
+                   ketfact:hasName             ?I2Name ;
+                   owl:sameAs                  ?I2Link .}
+   union
+   {?Relation      ketfact:RelationType        ?Type ;
+                   ketfact:hasEntry1           ?Entry1 ;
+                   ketfact:hasEntry2           ?Entry2 .
+   ?Item1          rdfs:subClassOf             ?Entry1 ;
+                   ketfact:hasName             ?I1Name ;
+                   owl:sameAs                  ?I1Link .}
+   ?Entry2         ketfact:hasName             ?E2Name ;
+                   owl:sameAs                  ?E2Link .}
+   union
+   {?Relation      ketfact:RelationType        ?Type ;
+                   ketfact:hasEntry1           ?Entry1 ;
+                   ketfact:hasEntry2           ?Entry2 .
+   ?Item1          rdfs:subClassOf             ?Entry1 ;
+                   ketfact:hasName             ?I1Name ;
+                   owl:sameAs                  ?I1Link .}
+   ?Item2          rdfs:subClassOf             ?Entry2 ;
+                   ketfact:hasName             ?I2Name ;
+                   owl:sameAs                  ?I2Link .}
+   }
+<-- end
+
+
+
+4. Query protocols for case 4
+
+start -->
+   prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+   prefix owl: <http://www.w3.org/2002/07/owl#> 
+   prefix snomed: <http://wasp.cs.vu.nl/sct/sct#>
+   prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+   prefix mikg: <http://wasp.cs.vu.nl/mikg/>
+   prefix ketpath: <http://wasp.cs.vu.nl/ketpath/>
+   prefix ppconcept: <http://wasp.cs.vu.nl/ppconcept#>
+   prefix ppstatement: <http://wasp.cs.vu.nl/ppstatement#>   
+   
+   select distinct  ?Statement  ?pmid  ?doi  ?Neurotransmitter  ?Microbiota 
+                    ?probiotics  ?composition  ?text  ?URLLabel
+   
+   where {
+   {?statement    mikg:hasNeurotransmitter   ?Neurotransmitter ;
+                  mikg:hasGutMicrobiota      ?Microbiota ;
+                  mikg:hasModulation         ?Modulation ;
+                  mikg:hasReference          ?Reference .
+   ?Reference     mikg:hasPMID               ?pmid ;
+                  mikg:hasDOI                ?doi .}
+   union
+   {?statement    ppstatement:hasEffectOn    ?Effect ;
+                  ppstatement:hasProbiotics  ?Probiotics ;
+                  ppstatement:hasReference   ?Reference .
+   ?reference     ppstatement:hasPMID        ?pmid .
+   filter regex   (?effect,'bdnf','i')}
+   union
+   {?Statement    ppstatement:hasEffectOn    ?Effect ;
+                  ppstatement:hasProbiotics  ?Probiotics ;
+                  ppstatement:hasReference   ?Reference ;
+   ?Reference     ppstatement:hasPMID        ?pmid .
+   ?Probiotics    a                          owl:Class ;
+                  owl:intersectionOf         ?Mixture .
+   ?Mixture       rdf:rest*/rdf:first        ?Composition .
+   filter regex   (?effect,'bdnf','i')}
+   union
+   {?pmid         ppconcept:hasAnnotations   ?Annotations .
+   ?Annotations   ppconcept:hasText          ?Text .
+   ?Annotations   ppconcept:hasAnnotation    ?Annotation .
+   ?Annotation    ppconcept:hasTerm          ?Term .
+   ?Term          ppconcept:hasSenses        ?Senses .
+   ?Senses        ppconcept:hasSense         ?Sense .
+   ?Sense         ppconcept:SenseURL         ?URL .
+   ?URL           rdfs:subClassOf            <http://www.ihtsdo.org/SCT_264395009> .
+   ?URL           snomed:hasEnglishLabel     ?URLLabel .
+   filter regex   (?Text,'bdnf','i')}
+   }
+<-- end
