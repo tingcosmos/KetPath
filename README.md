@@ -10,7 +10,7 @@ The Schema Data of the KetPath, SPARQL query codes, and query results are availa
 # Citation
 `@article{liu2020ketpath,
     author = {Liu, Ting and Feenstra, K Anton and Huang, Zhisheng and Heringa, Jaap},
-    title = "{A biomedical literature derived ketamine pathway knowledge graph}",
+    title = "{Mining literature, microbiome and pathway data to explore the relations of ketamine with neurotransmitters and gut microbiota using a knowledge-graph}",
     journal = {},
     year = {2023},
     volume = {},
