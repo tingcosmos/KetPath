@@ -34,7 +34,7 @@ If the database is too large to upload from the User data page, you can store th
 ## Accessing and reasoning data
 The data in GraphDB can be accessed and reasoned by SPARQL query language.
 You can start your query from the menu SPARQL.
-You can find several query templates in the sparql-codes.txt file.
+You can find several query templates in [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes).
 
 ## More information
 Please contact Ting Liu (t.liu@vu.nl) if you have any questions about the databases and query cases.
