@@ -9,7 +9,7 @@ We provide four SPARQL query cases with the code and their results. Users can pe
 
 ## Downloading databases
 SPARQL protocols are presented in sparql-codes.txt
-All databases are available at [KetPath Page](https://github.com/tingcosmos/KetPath).
+All databases are available at [KetPath Release Page](https://github.com/tingcosmos/KetPath/releases/).
 
 ## Downloading GraphDB
 Download GraphDB free edition from https://www.ontotext.com/products/graphdb/graphdb-free/.
