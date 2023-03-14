@@ -28,7 +28,7 @@ Fill in KetPath at the Repository ID*, and then click on "creat".
 ## Importing databases
 You can import databases from the menu Import -> RDF page -> User data.
 Click on "Upload RDF files" and select files to upload.
-Click on "Import", and fill the Target graphs with an URL as Named graphs.
+Click on `Import`, and fill the Target graphs with an URL as Named graphs.
 If the database is too large to upload from the User data page, you can store the datababase in the local 'graphdb-import' file and then import the datababase from the menu Import -> RDF page -> Server files.
 
 ## Accessing and reasoning data
