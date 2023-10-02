@@ -18,22 +18,22 @@ Please download Java from https://java.com/en/download/help/download_options.xml
 ## Starting GraphDB
 Run the GraphDB script in the bin directory. To access the Workbench, open http://localhost:7200 in a browser.
 
-## Creating repositories
+## Creating repositories in GraphDB
 By default, the GraphDB will initialise a location but not create any repositories.
 You can create a new repository from the menu `Setup` -> `Repositories` page in the GraphDB Workbench.
 To create a new repository in the location, click `Create new repository`.
 Fill in KetPath at the `Repository ID*`, then click `creat`.
 
-## Importing databases
+## Importing databases in GraphDB
 You can import databases from the menu `Import` -> `RDF page` -> `User data`.
 Click on `Upload RDF files` and select files to upload.
 Click on `Import`, and fill the Target graphs with a URL as Named graphs.
 If the database is too large to upload from the User data page, you can store the database in the local `graphdb-import` file and then import the database from the menu `Import` -> `RDF page` -> `Server files`.
 
-## Accessing and reasoning data
+## Accessing and reasoning data in GraphDB
 The data in GraphDB can be accessed and reasoned by SPARQL query language.
-You can start your query from the menu SPARQL.
-You can find several query templates in [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes).
+Start query from the menu `SPARQL`.
+Please find query templates in [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes).
 
 ## More information
 Please contact Ting Liu (t.liu@vu.nl) if you have any questions about the databases and query cases.
