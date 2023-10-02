@@ -37,7 +37,7 @@ Please find query templates in [sparql-codes](https://github.com/tingcosmos/KetP
 
 ## More information
 Please contact Ting Liu (t.liu@vu.nl) if you have any questions about the databases and query cases.
-Here is also a GraphDB quick start guide: http://graphdb.ontotext.com/documentation/free/quick-start-guide.html for more information.
+Please get more information on GraphDB for a [quick start guide](http://graphdb.ontotext.com/documentation/free/quick-start-guide.html).
 
 ## Citation
 `@article{liu2020ketpath,
