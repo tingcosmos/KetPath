@@ -75,7 +75,7 @@ The performance of the relation extraction task needs to be evaluated using five
 The relational dataset generated by the BioKetBERT model is stored in the `KetRela.ttl` file, which also need to be added to the `KetPath repository` in GraphDB.
 
 ## More information
-Please contact Ting Liu (t.liu@vu.nl; tingliu0909@gmail.com) if you have any questions about the constructing process, datasets and query protocols.
+Please contact Ting Liu (t.liu@vu.nl; tingliu0909@gmail.com) if you have any questions about the construction process, the datasets and query protocols.
 
 ## Citation
 `@article{liu2020ketpath,
