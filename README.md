@@ -65,9 +65,12 @@ Use the SPARQL query endpoint of UniProt to retrieve its data without downloadin
 ### Relation extraction with BioKetBERT
 **1. Preparing training and testing datasets for relation extraction**
 Run the query protocol for case 1 from the 'sparql-codes.txt' file in GraphDB to retrieve sentences where 'ketamine' and 'neurotransmitter' co-occurrence. The target-named entities need to be tagged with the pre-defined tags such as @entity$ for further relation extraction tasks. For the training set, a label needs to be added indicating whether the two entities in a sentence are related: 1 for a relation, 0 otherwise. 
+
 **2. Fine-tuning the BioBERT model and performing relation extraction**
 Fine-tune the BioBERT model and dubber the resulting model BioKetBERT. Perform relation extraction tasks withBioKetBERT according the process provided by Lee et al. at https://github.com/dmis-lab/biobert. More details can be find in their paper BioBERT: a pre-trained biomedical language representation model for biomedical text mining for more details. 
+
 The performance of the relation extraction task needs to be evaluated using five-fold cross-validation, where the dataset containing 2,143 sentences is randomly partitioned into five stratified subsets of equal size: for each round, one data block (428 sentences) is used for training and the remaining (1,715 sentences) four are for testing.
+
 The relational dataset generated by the BioKetBERT model is stored in the 'KetRela.ttl' file, which also need to be added to the KetPath repository in GraphDB.
 
 ## More information
