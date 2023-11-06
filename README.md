@@ -40,74 +40,38 @@ Use XMedlan, a Xerox natural language processing (NLP) tool, for named entity re
 
 ### Knowledge graph construction in the GraphDB
 
-#### Downloading and starting the GraphDB
+**1. Downloading and starting the GraphDB**
+Download GraphDB free edition from https://www.ontotext.com/products/graphdb/graphdb-free/. GraphDB is a Java application and requires Java 8. 
+Make sure you have an up-to-date Java 8 installation. Please download Java from https://java.com/en/download/help/download_options.xml. Run the GraphDB script in the bin directory. 
+To access the Workbench, open http://localhost:7200 in a browser. Please get more information on GraphDB for a quick start guide.
 
-Download GraphDB free edition from https://www.ontotext.com/products/graphdb/graphdb-free/. GraphDB is a Java application and requires Java 8. Make sure you have an up-to-date Java 8 installation. Please download Java from https://java.com/en/download/help/download_options.xml. Run the GraphDB script in the bin directory. To access the Workbench, open http://localhost:7200 in a browser. Please get more information on GraphDB for a quick start guide.
-
-**2. Creating repositories in GraphDB
-
-By default, the GraphDB will initialize a location but not create any repositories. Create a new repository from the menu `Setup` -> `Repositories` page in the GraphDB Workbench. To create a new repository in the location, click `Create new repository`. Fill in KetPath at the `Repository ID*`, then click `creat`.
-
-5.3 Importing databases in GraphDB
-
-Import all databases from the menu `Import` -> `RDF page` -> `User data`. Click on `Upload RDF files` and select files to upload. Click on `Import`, and fill the Target graphs with a URL as Named graphs. If the database is too large to upload from the User data page, you can store the database in the local `graphdb-import` file and then import the database from the menu `Import` -> `RDF page` -> `Server files`.
-
-5.4 Accessing and reasoning data in GraphDB
-
-The data in GraphDB can be accessed and reasoned by SPARQL query language. Start query from the menu `SPARQL`. Please find query templates in the 'sparql-codes.txt' file. Use the SPARQL query endpoint of UniProt to retrieve its data without downloading the data stack.
-
-6. Relation extraction with BioKetBERT
-
-6.1 Preparing training and testing datasets for relation extraction
-
-Run the query protocol for case 1 from the 'sparql-codes.txt' file in GraphDB to retrieve sentences where 'ketamine' and 'neurotransmitter' co-occurrence. The target-named entities need to be tagged with the pre-defined tags such as @entity$ for further relation extraction tasks. For the training set, a label needs to be added indicating whether the two entities in a sentence are related: 1 for a relation, 0 otherwise. 
-
-6.2 Fine-tuning the BioBERT model and performing relation extraction
-
-Fine-tune the BioBERT model and dubber the resulting model BioKetBERT. Perform relation extraction tasks withBioKetBERT according the process provided by Lee et al. at https://github.com/dmis-lab/biobert. More details can be find in their paper BioBERT: a pre-trained biomedical language representation model for biomedical text mining for more details. 
-
-The performance of the relation extraction task needs to be evaluated using five-fold cross-validation, where the dataset containing 2,143 sentences is randomly partitioned into five stratified subsets of equal size: for each round, one data block (428 sentences) is used for training and the remaining (1,715 sentences) four are for testing.
-
-The relational dataset generated by the BioKetBERT model is stored in the 'KetRela.ttl' file, which also need to be added to the KetPath repository in GraphDB.
-
-More information
-
-Please contact Ting Liu (t.liu@vu.nl; tingliu0909@gmail.com) if you have any questions about the constructing process, datasets and query protocols.
-
-## SPARQL
-SPARQL protocols are presented in [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes) and the query results are available at [NEED FURTHER UPDATED](). Users can perform their own queries by changing the parameters in the templates that we designed.
-
-## Downloading databases
-All databases are available at [KetPath Release Page](https://github.com/tingcosmos/KetPath/releases/).
-
-## Downloading GraphDB
-Download GraphDB free edition from https://www.ontotext.com/products/graphdb/graphdb-free/.
-GraphDB is a Java application and requires Java 8. Make sure you have an up-to-date Java 8 installation.
-Please download Java from https://java.com/en/download/help/download_options.xml.
-
-## Starting GraphDB
-Run the GraphDB script in the bin directory. To access the Workbench, open http://localhost:7200 in a browser.
-
-## Creating repositories in GraphDB
-By default, the GraphDB will initialise a location but not create any repositories.
-You can create a new repository from the menu `Setup` -> `Repositories` page in the GraphDB Workbench.
-To create a new repository in the location, click `Create new repository`.
+**2. Creating repositories in GraphDB**
+By default, the GraphDB will initialize a location but not create any repositories. 
+Create a new repository from the menu `Setup` -> `Repositories` page in the GraphDB Workbench. 
+To create a new repository in the location, click `Create new repository`. 
 Fill in KetPath at the `Repository ID*`, then click `creat`.
 
-## Importing databases in GraphDB
-You can import databases from the menu `Import` -> `RDF page` -> `User data`.
-Click on `Upload RDF files` and select files to upload.
-Click on `Import`, and fill the Target graphs with a URL as Named graphs.
-If the database is too large to upload from the User data page, you can store the database in the local `graphdb-import` file and then import the database from the menu `Import` -> `RDF page` -> `Server files`.
+**3. Importing databases in GraphDB**
+Import all databases from the menu `Import` -> `RDF page` -> `User data`. Click on `Upload RDF files` and select files to upload. 
+Click on `Import`, and fill the Target graphs with a URL as Named graphs. 
+If the database is too large to upload from the User data page, you can store the database in the local `graphdb-import` file and then import the database from the menu `Import` -> `RDF page` -> `Server files`. 
+All databases are available at [KetPath Release Page](https://github.com/tingcosmos/KetPath/releases/).
 
-## Accessing and reasoning data in GraphDB
-The data in GraphDB can be accessed and reasoned by SPARQL query language.
-Start query from the menu `SPARQL`.
-Please find query templates in [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes).
+**4. Accessing and reasoning data in GraphDB**
+The data in GraphDB can be accessed and reasoned by SPARQL query language. Start query from the menu `SPARQL`. 
+Please find query templates in the [sparql-codes](https://github.com/tingcosmos/KetPath/blob/main/sparql-codes). Users can perform their own queries by changing the parameters in the templates that we designed. 
+Use the SPARQL query endpoint of UniProt to retrieve its data without downloading the data stack. 
+
+### Relation extraction with BioKetBERT
+**1. Preparing training and testing datasets for relation extraction**
+Run the query protocol for case 1 from the 'sparql-codes.txt' file in GraphDB to retrieve sentences where 'ketamine' and 'neurotransmitter' co-occurrence. The target-named entities need to be tagged with the pre-defined tags such as @entity$ for further relation extraction tasks. For the training set, a label needs to be added indicating whether the two entities in a sentence are related: 1 for a relation, 0 otherwise. 
+**2. Fine-tuning the BioBERT model and performing relation extraction**
+Fine-tune the BioBERT model and dubber the resulting model BioKetBERT. Perform relation extraction tasks withBioKetBERT according the process provided by Lee et al. at https://github.com/dmis-lab/biobert. More details can be find in their paper BioBERT: a pre-trained biomedical language representation model for biomedical text mining for more details. 
+The performance of the relation extraction task needs to be evaluated using five-fold cross-validation, where the dataset containing 2,143 sentences is randomly partitioned into five stratified subsets of equal size: for each round, one data block (428 sentences) is used for training and the remaining (1,715 sentences) four are for testing.
+The relational dataset generated by the BioKetBERT model is stored in the 'KetRela.ttl' file, which also need to be added to the KetPath repository in GraphDB.
 
 ## More information
-Please contact Ting Liu (t.liu@vu.nl) if you have any questions about the databases and query cases.
-Please get more information on GraphDB for a [quick start guide](http://graphdb.ontotext.com/documentation/free/quick-start-guide.html).
+Please contact Ting Liu (t.liu@vu.nl; tingliu0909@gmail.com) if you have any questions about the constructing process, datasets and query protocols.
 
 ## Citation
 `@article{liu2020ketpath,
